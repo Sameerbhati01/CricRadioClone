@@ -337,9 +337,10 @@ struct WeatherInfoView: View {
                         Text(weather.location)
                             .font(.headline)
                             .foregroundColor(.white)
-                        Text("\(weather.tempC)°C")
+                        Text(String(format: "%.1f°C", weather.tempC))
                             .font(.title2)
                             .foregroundColor(.yellow)
+
                         Text(weather.condition.text)
                             .font(.headline)
                             .foregroundColor(.blue)
