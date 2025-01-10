@@ -76,10 +76,11 @@ struct MiniScorecardView: View {
             MatchDetailsView(runRate: scorecard.now.runRate, announcement: scorecard.announcement1)
         }
         .padding()
-        .background(Color.gray.opacity(0.2))
+        .background(Color(hex: "#224976"))
         .cornerRadius(10)
     }
 }
+
 
 struct TeamView: View {
     let team: MiniScorecard.Teams.Team
@@ -92,7 +93,9 @@ struct TeamView: View {
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 50, height: 50)
+                            .frame(height: 30)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.black, lineWidth: 1)) .shadow(radius: 10)
                     } placeholder: {
                         ProgressView()
                     }
@@ -140,10 +143,12 @@ struct MatchDetailsView: View {
         HStack {
             Text("CRR : \(runRate)")
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundColor(Color(hex: "#8BBEFB"))
+            
+            Spacer()
             Text(announcement)
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundColor(Color(hex: "#8BBEFB"))
         }
     }
 }
@@ -376,6 +381,7 @@ struct VenueStatsView: View {
                 
                 HStack {
                     Spacer()
+                    Spacer()
                     Text("1st Inn")
                         .font(.caption)
                         .bold()
@@ -414,10 +420,10 @@ struct VenueStatsSectionView: View {
             VenueStatRow(title: "Win Bat First", value: "\(venueStats.batFirstWins)")
             Divider().background(Color.white)
             VenueStatRow(title: "Win Ball First", value: "\(venueStats.ballFirstWins)")
+            Divider().background(Color.white)
         }
     }
 }
-
 struct BattingStatsView: View {
     let battingFirst: VenueInfo.VenueStats.Batting
     let battingSecond: VenueInfo.VenueStats.Batting
@@ -436,6 +442,7 @@ struct BattingStatsView: View {
         }
     }
 }
+
 
 struct VenueStatRow: View {
     let title: String
@@ -458,6 +465,21 @@ struct VenueStatRow: View {
     }
 }
 
+extension Color {
+    init(hex: String) {
+        let scanner = Scanner(string: hex)
+        scanner.scanLocation = 1  // Skip the leading #
+        
+        var rgbValue: UInt64 = 0
+        scanner.scanHexInt64(&rgbValue)
+        
+        let red = Double((rgbValue & 0xff0000) >> 16) / 255.0
+        let green = Double((rgbValue & 0x00ff00) >> 8) / 255.0
+        let blue = Double(rgbValue & 0x0000ff) / 255.0
+        
+        self.init(red: red, green: green, blue: blue)
+    }
+}
 
 #Preview {
     ContentView()
