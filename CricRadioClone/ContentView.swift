@@ -30,6 +30,9 @@ struct ContentView: View {
                 if let error = viewModel.errorMessage {
                     ErrorView(error: error)
                 }
+                Text("WebSocket")
+                    .foregroundColor(.white)
+                WebSocketViewControllerRepresentable() .frame(height: 100)  .background(Color(UIColor.systemBackground)) .cornerRadius(10) .shadow(radius: 10)
             }
             .padding()
         }
